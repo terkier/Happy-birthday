@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Ella, from Dem</title>
+  <link href="ella-letter_data_002/css2.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #fff0f5;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .letter-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 20px;
+      max-width: 90vw;
+      width: 100%;
+      box-shadow: 0 10px 40px rgba(255, 105, 180, 0.3);
+      position: relative;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease;
+    }
+
+    .letter-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: #d63384;
+      text-align: center;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.6;
+      margin: 1em 0;
+      white-space: pre-wrap;
+    }
+
+    .heart {
+      font-size: 2.2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      display: block;
+      margin-top: 30px;
+      touch-action: manipulation;
+    }
+
+    .heart.animate {
+      animation: pop 0.5s ease forwards;
+    }
+
+    @keyframes pop {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.4); }
+      100% { transform: scale(1); }
+    }
+
+    canvas.confetti {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .iloveyou {
+      font-family: 'Winky Rough', cursive;
+      font-size: 2.5rem;
+      color: #ff69b4;
+      margin-top: 20px;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+      text-align: center;
+    }
+
+    .iloveyou.visible {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="letter-container visible" id="letterBox">
+    <h1>Happy Birthday, ELLA 🎂</h1>
+    <p>
+Happy birthday, ELLA.
+
+It’s funny how I still remember your birthday without needing to check. It’s just there, like a date carved quietly into me. No reminders. No alarms. Just your name, still living somewhere in my heart.
+
+I’ve been thinking about you again. Maybe because of today. Maybe because I never really stopped. And right now, more than usual, the memories feel louder—the good ones, the sad ones, the ones I wish I could relive.
+
+You were once my person. My comfort. My safe place. I remember how we used to laugh at the smallest things, how we could talk for hours without getting bored, how just being with you made everything feel lighter. I thought we’d make it. I really did.
+
+But things changed.
+
+We had moments where we drifted. Where silence replaced warmth. Where we tried, but it wasn’t enough. We kept hurting each other—slowly, quietly—until one day, it was too much. And even though I still cared, I had to choose peace. Not because I wanted to leave, but because staying was tearing me apart.
+
+Still, I wish we had more time. One more day. One more chance to be the version of us that smiled more, loved better, and stayed stronger. I’d go back if I could. Not to change everything—but just to hold on a little longer.
+
+Now, we’re living different lives. You have your world, and I have mine. But a part of me still wonders what it would be like if we crossed paths again. Maybe not now. Maybe not soon. But someday.
+
+I hope you’re doing okay. I hope your birthday is filled with real love and people who truly see you. I hope someone out there makes you feel even a little of what I once felt for you—because you deserve that.
+
+Also… I’m sorry for greeting you so late. It’s already midnight. I’ve been making something for you—a small code, a virtual gift. I’ve been working on it since the last message I sent on Discord. I know it’s not perfect. Maybe it’s even disappointing. I just didn’t have much time, and so much has been happening.
+
+Right now, I’m in CDO. I’m here with my mom—it's her second chemo schedule. But even in the middle of everything, I still wanted to do something for you. Something that came from the heart.
+
+I hope you like it. And if you feel like it… feel free to reply. Please, usap tayo. Kahit saglit.
+
+Happy birthday, ELLA.
+
+You may be far, but a part of me is still here, still quietly wishing—maybe, somehow—we’ll find each other again.
+
+– Dem
+(click the heart)
+    </p>
+    <div class="heart" id="heart">❤️</div>
+    <div class="iloveyou" id="iloveyou">I love you</div>
+  </div>
+
+  <canvas class="confetti" id="confetti" width="1920" height="962"></canvas>
+
+  <script>
+    const heart = document.getElementById('heart');
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    const letterBox = document.getElementById('letterBox');
+    const iloveyou = document.getElementById('iloveyou');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const confetti = [];
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 150; i++) {
+        confetti.push({
+          x: Math.random() * canvas.width,
+          y: random(-canvas.height, 0),
+          r: random(4, 6),
+          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+          speed: random(1, 3),
+          drift: random(-1.5, 1.5)
+        });
+      }
+    }
+
+    function drawConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let c of confetti) {
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.r, 0, 2 * Math.PI);
+        ctx.fillStyle = c.color;
+        ctx.fill();
+        c.y += c.speed;
+        c.x += c.drift;
+
+        if (c.y > canvas.height) {
+          c.y = random(-canvas.height, 0);
+          c.x = Math.random() * canvas.width;
+        }
+      }
+      requestAnimationFrame(drawConfetti);
+    }
+
+    function showLetterScene() {
+      letterBox.classList.add('visible');
+      createConfetti();
+      drawConfetti();
+    }
+
+    heart.addEventListener('click', () => {
+      heart.classList.add('animate');
+      iloveyou.classList.add('visible');
+      setTimeout(() => {
+        heart.classList.remove('animate');
+      }, 600);
+    });
+
+    heart.addEventListener('touchstart', () => {
+      heart.classList.add('animate');
+      iloveyou.classList.add('visible');
+      setTimeout(() => {
+        heart.classList.remove('animate');
+      }, 600);
+    });
+
+    window.addEventListener('load', showLetterScene);
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>
